@@ -727,3 +727,255 @@ body {
   background: #bbdefb;
   border-color: #1976d2;
 }
+
+/* Auto-Tag Styles */
+.auto-tag-header {
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.auto-tag-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.stat-card:nth-child(2) {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.stat-card:nth-child(3) {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.stat-card:nth-child(4) {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.stat-number {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 14px;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+.auto-tag-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.auto-tag-results {
+  min-height: 200px;
+}
+
+.suggestions-header {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.suggestions-header h3 {
+  margin: 0;
+  color: #333;
+}
+
+.suggestions-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.suggestions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.suggestion-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #667eea;
+  transition: all 0.2s;
+}
+
+.suggestion-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.suggestion-bookmark-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.suggestion-favicon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.suggestion-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.suggestion-title {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+  font-size: 15px;
+}
+
+.suggestion-url {
+  color: #666;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 4px;
+}
+
+.suggestion-domain {
+  color: #999;
+  font-size: 12px;
+  font-family: monospace;
+}
+
+.suggestion-tags-section {
+  margin-bottom: 16px;
+}
+
+.existing-tags-label,
+.suggested-tags-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.suggestion-count {
+  color: #667eea;
+  font-weight: 700;
+}
+
+.existing-tags,
+.suggested-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.tag-existing {
+  background: #e8eaf6;
+  color: #5e35b1;
+}
+
+.tag-suggested {
+  background: #e3f2fd;
+  color: #1976d2;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tag-checkbox {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tag-checkbox input[type="checkbox"] {
+  margin-right: 6px;
+  cursor: pointer;
+}
+
+.tag-checkbox input[type="checkbox"]:checked + .tag-suggested {
+  background: #1976d2;
+  color: white;
+}
+
+.folder-suggestion {
+  background: #fff3e0;
+  border-left: 3px solid #ff9800;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #666;
+  margin-top: 12px;
+}
+
+.suggestion-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.loading-message,
+.error-message {
+  background: white;
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  font-size: 16px;
+  color: #666;
+}
+
+.error-message {
+  color: #e74c3c;
+}
+
+.success-state {
+  background: white;
+  border-radius: 8px;
+  padding: 60px 40px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.success-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.success-state h3 {
+  color: #27ae60;
+  margin-bottom: 24px;
+}
+
+.success-message-inline {
+  color: #27ae60;
+  font-size: 13px;
+  font-weight: 600;
+  margin-left: 8px;
+}

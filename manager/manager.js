@@ -57,6 +57,10 @@ async function loadData() {
     const archivedBookmarks = await StorageUtils.getArchivedBookmarks();
     document.getElementById('navCountArchive').textContent = archivedBookmarks.length;
 
+    // Load auto-tag stats
+    const autoTagStats = await AutoTagger.getAutoTagStats();
+    document.getElementById('navCountAutoTag').textContent = autoTagStats.canSuggestTags;
+
   } catch (error) {
     console.error('Error loading data:', error);
   } finally {
@@ -160,6 +164,12 @@ async function updateView() {
       document.getElementById('viewTitle').textContent = 'Tags';
       document.getElementById('viewDescription').textContent = 'Browse bookmarks by tags';
       await renderTags();
+      break;
+
+    case 'auto-tag':
+      document.getElementById('viewTitle').textContent = 'Auto-Tag Bookmarks';
+      document.getElementById('viewDescription').textContent = 'Automatically suggest and apply tags based on URL analysis';
+      await renderAutoTag();
       break;
   }
 }
@@ -1286,6 +1296,253 @@ async function exportData() {
   } catch (error) {
     console.error('Error exporting data:', error);
     alert('Error exporting data. Please try again.');
+  }
+}
+
+async function renderAutoTag() {
+  const contentArea = document.getElementById('contentArea');
+
+  // Get auto-tag statistics
+  const stats = await AutoTagger.getAutoTagStats();
+
+  // Create header with stats
+  contentArea.innerHTML = `
+    <div class="auto-tag-header">
+      <div class="auto-tag-stats">
+        <div class="stat-card">
+          <div class="stat-number">${stats.totalBookmarks}</div>
+          <div class="stat-label">Total Bookmarks</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">${stats.taggedBookmarks}</div>
+          <div class="stat-label">Already Tagged</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">${stats.untaggedBookmarks}</div>
+          <div class="stat-label">Untagged</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">${stats.canSuggestTags}</div>
+          <div class="stat-label">Can Auto-Tag</div>
+        </div>
+      </div>
+      <div class="auto-tag-actions">
+        <button id="scanUntaggedBtn" class="btn btn-primary">
+          🔍 Scan Untagged Bookmarks
+        </button>
+        <button id="scanAllBtn" class="btn btn-secondary">
+          🔍 Scan All Bookmarks
+        </button>
+      </div>
+    </div>
+    <div id="autoTagResults" class="auto-tag-results"></div>
+  `;
+
+  // Add event listeners
+  document.getElementById('scanUntaggedBtn').addEventListener('click', async () => {
+    await scanAndShowSuggestions(false);
+  });
+
+  document.getElementById('scanAllBtn').addEventListener('click', async () => {
+    await scanAndShowSuggestions(true);
+  });
+}
+
+async function scanAndShowSuggestions(scanAll) {
+  const resultsArea = document.getElementById('autoTagResults');
+  resultsArea.innerHTML = '<div class="loading-message">🔍 Analyzing bookmarks...</div>';
+
+  try {
+    let suggestions;
+    if (scanAll) {
+      suggestions = await AutoTagger.autoTagAllBookmarks();
+    } else {
+      suggestions = await AutoTagger.autoTagUntaggedBookmarks();
+    }
+
+    if (suggestions.length === 0) {
+      resultsArea.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">✅</div>
+          <h3>No suggestions available</h3>
+          <p>All bookmarks are either already tagged or don't match any patterns.</p>
+        </div>
+      `;
+      return;
+    }
+
+    // Group suggestions by domain for better organization
+    const domainGroups = {};
+    suggestions.forEach(suggestion => {
+      const domain = DomainKnowledge.extractDomain(suggestion.bookmark.url);
+      if (!domainGroups[domain]) {
+        domainGroups[domain] = [];
+      }
+      domainGroups[domain].push(suggestion);
+    });
+
+    // Render suggestions
+    resultsArea.innerHTML = `
+      <div class="suggestions-header">
+        <h3>Found ${suggestions.length} bookmarks with tag suggestions</h3>
+        <div class="suggestions-actions">
+          <button id="applyAllSuggestionsBtn" class="btn btn-primary">
+            ✨ Apply All Suggestions
+          </button>
+          <button id="clearSuggestionsBtn" class="btn btn-secondary">
+            Clear
+          </button>
+        </div>
+      </div>
+      <div class="suggestions-list"></div>
+    `;
+
+    const suggestionsList = resultsArea.querySelector('.suggestions-list');
+
+    // Render each suggestion
+    for (const suggestion of suggestions) {
+      const suggestionCard = await createSuggestionCard(suggestion);
+      suggestionsList.appendChild(suggestionCard);
+    }
+
+    // Add event listener for apply all
+    document.getElementById('applyAllSuggestionsBtn').addEventListener('click', async () => {
+      if (confirm(`Apply suggested tags to ${suggestions.length} bookmarks?`)) {
+        await applyAllSuggestions(suggestions);
+      }
+    });
+
+    document.getElementById('clearSuggestionsBtn').addEventListener('click', () => {
+      resultsArea.innerHTML = '';
+    });
+
+  } catch (error) {
+    console.error('Error scanning bookmarks:', error);
+    resultsArea.innerHTML = `
+      <div class="error-message">
+        ❌ Error scanning bookmarks. Please try again.
+      </div>
+    `;
+  }
+}
+
+async function createSuggestionCard(suggestion) {
+  const card = document.createElement('div');
+  card.className = 'suggestion-card';
+  card.dataset.bookmarkId = suggestion.bookmarkId;
+
+  const bookmark = suggestion.bookmark;
+  const domain = DomainKnowledge.extractDomain(bookmark.url);
+
+  card.innerHTML = `
+    <div class="suggestion-bookmark-info">
+      <img class="suggestion-favicon" src="https://www.google.com/s2/favicons?domain=${domain}"
+           onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22><rect width=%2216%22 height=%2216%22 fill=%22%23ddd%22/></svg>'">
+      <div class="suggestion-details">
+        <div class="suggestion-title">${bookmark.title || 'Untitled'}</div>
+        <div class="suggestion-url">${bookmark.url}</div>
+        <div class="suggestion-domain">Domain: ${domain}</div>
+      </div>
+    </div>
+    <div class="suggestion-tags-section">
+      <div class="existing-tags-label">
+        ${suggestion.existingTags.length > 0 ? 'Current tags:' : 'No tags yet'}
+      </div>
+      <div class="existing-tags">
+        ${suggestion.existingTags.map(tag => `<span class="tag tag-existing">${tag}</span>`).join('')}
+      </div>
+      <div class="suggested-tags-label">
+        Suggested tags: <span class="suggestion-count">(${suggestion.newTags.length} new)</span>
+      </div>
+      <div class="suggested-tags">
+        ${suggestion.newTags.map(tag => `
+          <label class="tag-checkbox">
+            <input type="checkbox" checked value="${tag}">
+            <span class="tag tag-suggested">${tag}</span>
+          </label>
+        `).join('')}
+      </div>
+      ${suggestion.folderSuggestion ? `
+        <div class="folder-suggestion">
+          📁 Suggested folder: <strong>${suggestion.folderSuggestion}</strong>
+        </div>
+      ` : ''}
+    </div>
+    <div class="suggestion-actions">
+      <button class="btn btn-sm btn-primary apply-suggestion-btn">
+        ✅ Apply Selected Tags
+      </button>
+      <button class="btn btn-sm btn-secondary skip-suggestion-btn">
+        Skip
+      </button>
+    </div>
+  `;
+
+  // Add event listeners
+  const applyBtn = card.querySelector('.apply-suggestion-btn');
+  applyBtn.addEventListener('click', async () => {
+    const selectedTags = Array.from(card.querySelectorAll('.tag-checkbox input:checked'))
+      .map(checkbox => checkbox.value);
+
+    if (selectedTags.length > 0) {
+      await AutoTagger.applyTags(suggestion.bookmarkId, selectedTags);
+      card.style.opacity = '0.5';
+      card.style.pointerEvents = 'none';
+      applyBtn.textContent = '✅ Applied';
+      applyBtn.disabled = true;
+
+      // Show success message
+      const successMsg = document.createElement('div');
+      successMsg.className = 'success-message-inline';
+      successMsg.textContent = `Applied ${selectedTags.length} tags!`;
+      card.querySelector('.suggestion-actions').appendChild(successMsg);
+
+      // Update count in navigation
+      await loadData();
+    }
+  });
+
+  const skipBtn = card.querySelector('.skip-suggestion-btn');
+  skipBtn.addEventListener('click', () => {
+    card.remove();
+  });
+
+  return card;
+}
+
+async function applyAllSuggestions(suggestions) {
+  const resultsArea = document.getElementById('autoTagResults');
+  resultsArea.innerHTML = '<div class="loading-message">✨ Applying tags to all bookmarks...</div>';
+
+  try {
+    let appliedCount = 0;
+    for (const suggestion of suggestions) {
+      await AutoTagger.applyTags(suggestion.bookmarkId, suggestion.newTags);
+      appliedCount++;
+    }
+
+    resultsArea.innerHTML = `
+      <div class="success-state">
+        <div class="success-icon">✅</div>
+        <h3>Successfully tagged ${appliedCount} bookmarks!</h3>
+        <button id="scanAgainBtn" class="btn btn-primary">Scan Again</button>
+      </div>
+    `;
+
+    document.getElementById('scanAgainBtn').addEventListener('click', () => {
+      renderAutoTag();
+    });
+
+    // Update counts
+    await loadData();
+
+  } catch (error) {
+    console.error('Error applying suggestions:', error);
+    resultsArea.innerHTML = `
+      <div class="error-message">
+        ❌ Error applying tags. Some tags may have been applied.
+      </div>
+    `;
   }
 }
 
