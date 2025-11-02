@@ -2,7 +2,9 @@
   "manifest_version": 2,
   "name": "Barbo's Better Bookmark Organizer",
   "version": "1.0.0",
-  "description": "Organize, tag, and maintain your bookmarks efficiently. Remove duplicates and find unused bookmarks.",
+  "description": "Organize, tag, and maintain your bookmarks efficiently. Remove duplicates, find similar bookmarks, and review your collection periodically.",
+  "author": "Matthew Barber",
+  "homepage_url": "https://github.com/mbarber107/barbos-better-bookmark-organizer",
 
   "permissions": [
     "bookmarks",
