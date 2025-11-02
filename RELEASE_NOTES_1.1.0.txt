@@ -1,0 +1,163 @@
+================================================================================
+BARBO'S BETTER BOOKMARK ORGANIZER - VERSION 1.1.0 RELEASE
+================================================================================
+
+🎉 NEW MAJOR FEATURE: SMART AUTO-TAGGING 🤖
+
+Version 1.1.0 introduces an intelligent auto-tagging system that saves you
+hours of manual bookmark organization!
+
+================================================================================
+WHAT'S NEW
+================================================================================
+
+✨ SMART AUTO-TAGGING SYSTEM
+---------------------------
+Automatically suggests and applies tags to your bookmarks using:
+
+• Curated Database: Recognizes 70+ popular sites (GitHub, YouTube, etc.)
+• URL Pattern Detection: Identifies /blog, /docs, /wiki, /shop paths
+• Subdomain Analysis: Recognizes docs.*, blog.*, api.* patterns  
+• TLD Categorization: Categorizes .edu, .gov, .org domains
+• Title Analysis: Extracts keywords from bookmark titles
+• Learning System: Adapts to YOUR tagging patterns
+
+🎨 BEAUTIFUL NEW INTERFACE
+-------------------------
+• Statistics dashboard showing tagging potential
+• Interactive suggestion cards with checkbox selection
+• Bulk apply or apply tags individually
+• Folder suggestions based on tag categories
+• Real-time visual feedback
+
+🔒 100% PRIVACY MAINTAINED
+-------------------------
+All processing happens locally in your browser - no external API calls!
+
+================================================================================
+KEY IMPROVEMENTS
+================================================================================
+
+• Added domain-knowledge.js with 70+ domain mappings
+• Added auto-tagger.js with smart suggestion engine
+• Enhanced manager UI with Auto-Tag view
+• 250+ lines of new CSS for beautiful styling
+• Updated documentation with comprehensive guides
+
+================================================================================
+TECHNICAL DETAILS
+================================================================================
+
+Package Size: 46KB (was 33KB in v1.0.0)
+New Files: 2 (domain-knowledge.js, auto-tagger.js)
+Updated Files: 6
+Lines Added: ~1,200
+Lines of Code: ~4,500 total
+
+================================================================================
+INSTALLATION & UPDATES
+================================================================================
+
+FOR FIREFOX ADD-ONS USERS:
+- Version 1.0.0 is currently under review
+- Version 1.1.0 will be submitted after 1.0.0 is approved
+- You'll receive automatic updates once both are approved
+
+FOR MANUAL INSTALLATION:
+1. Download: barbos-better-bookmark-organizer-1.1.0.zip
+2. Open Firefox: about:debugging
+3. Click "This Firefox" → "Load Temporary Add-on"
+4. Select manifest.json from the unzipped folder
+
+FOR DEVELOPERS:
+- Clone: https://github.com/mbarber107/barbos-better-bookmark-organizer
+- Checkout: git checkout main
+- Latest commit includes v1.1.0
+
+================================================================================
+HOW TO USE AUTO-TAG
+================================================================================
+
+1. Open the extension manager (click extension icon → "Open Manager")
+2. Click "Auto-Tag" in the sidebar (🤖 icon)
+3. View your statistics:
+   - Total bookmarks
+   - Already tagged
+   - Untagged  
+   - Can be auto-tagged
+
+4. Choose scan type:
+   - "Scan Untagged Bookmarks" - Only bookmarks without tags
+   - "Scan All Bookmarks" - Get suggestions for everything
+
+5. Review suggestions:
+   - Each card shows bookmark info, current tags, and suggestions
+   - Check/uncheck tags you want to apply
+   - See folder suggestions
+
+6. Apply tags:
+   - "Apply Selected Tags" - Apply to one bookmark
+   - "Apply All Suggestions" - Tag everything at once
+
+7. Done! Your bookmarks are now organized with meaningful tags
+
+================================================================================
+EXAMPLES OF AUTO-TAGGING
+================================================================================
+
+URL: github.com/user/repo
+Suggested Tags: development, code, repository, programming, github
+
+URL: stackoverflow.com/questions/12345
+Suggested Tags: development, Q&A, programming, help, stackoverflow
+
+URL: youtube.com/watch?v=abc123
+Suggested Tags: video, entertainment, streaming, youtube
+
+URL: docs.python.org/3/tutorial
+Suggested Tags: documentation, python, programming, tutorial, docs
+
+URL: medium.com/@user/article-name
+Suggested Tags: articles, blog, reading, writing, medium
+
+================================================================================
+BACKWARD COMPATIBILITY
+================================================================================
+
+✅ Fully compatible with v1.0.0
+✅ All existing bookmarks and tags preserved
+✅ No breaking changes
+✅ All features from v1.0.0 continue to work
+
+================================================================================
+WHAT'S COMING NEXT
+================================================================================
+
+Potential features for v1.2.0:
+• User-customizable domain database
+• Import/export tagging rules
+• Bulk folder organization
+• Tag hierarchy and relationships
+• Enhanced pattern learning
+
+================================================================================
+SUPPORT & FEEDBACK
+================================================================================
+
+GitHub: https://github.com/mbarber107/barbos-better-bookmark-organizer
+Issues: https://github.com/mbarber107/barbos-better-bookmark-organizer/issues
+Privacy: See PRIVACY_POLICY.md (no data collection!)
+
+Found a domain we should recognize? Open an issue on GitHub!
+
+================================================================================
+THANK YOU!
+================================================================================
+
+Thank you for using Barbo's Better Bookmark Organizer! This auto-tagging
+feature represents hundreds of hours of development to make your bookmark
+management effortless.
+
+Happy organizing! 🎉
+
+================================================================================
