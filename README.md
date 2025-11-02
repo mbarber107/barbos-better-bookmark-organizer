@@ -5,6 +5,7 @@ A powerful Firefox extension to help you organize, tag, and maintain your bookma
 ## Features
 
 ### Core Functionality
+- **🤖 Smart Auto-Tagging** (NEW in v1.1.0): Automatically suggest and apply tags based on URL analysis, domain patterns, and learned user preferences
 - **Review Queue**: Randomly select bookmarks for periodic review to keep your collection organized
 - **Bookmark Organization**: View and manage all your bookmarks in a clean, hierarchical interface
 - **Duplicate Detection**: Find and remove duplicate bookmarks with smart URL normalization
@@ -70,6 +71,33 @@ This feature helps you:
 - Remove outdated or unnecessary bookmarks
 - Ensure your collection stays relevant and useful
 - Review bookmarks at your own pace with skip and load more options
+
+### Using Auto-Tag 🤖 (NEW in v1.1.0)
+
+The Auto-Tag feature uses intelligent analysis to suggest relevant tags for your bookmarks:
+
+1. Navigate to the "Auto-Tag" view in the manager
+2. View statistics: total bookmarks, already tagged, untagged, and how many can be auto-tagged
+3. Click "Scan Untagged Bookmarks" to analyze only bookmarks without tags
+4. Or click "Scan All Bookmarks" to get suggestions for all bookmarks
+5. Review each suggestion card showing:
+   - Bookmark details and favicon
+   - Current tags (if any)
+   - Suggested new tags with checkboxes
+   - Folder suggestions based on tags
+6. Select/deselect tags you want to apply
+7. Click "Apply Selected Tags" for individual bookmarks
+8. Or click "Apply All Suggestions" to tag all bookmarks at once
+
+**How Auto-Tag Works:**
+- **Curated Database**: Recognizes 70+ popular domains (GitHub, YouTube, Stack Overflow, etc.)
+- **URL Pattern Detection**: Identifies paths like /blog, /docs, /wiki, /products
+- **Subdomain Analysis**: Recognizes docs.*, blog.*, shop.* patterns
+- **TLD Categorization**: Categorizes .edu, .gov, .org, .io domains
+- **Title Keywords**: Extracts relevant keywords from bookmark titles
+- **Learning**: Adapts to your tagging patterns over time
+
+All processing is done locally - your data never leaves your browser!
 
 ### Finding Similar Bookmarks
 
