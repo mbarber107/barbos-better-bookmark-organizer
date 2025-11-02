@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Bookmark Organizer</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Barbo's Better Bookmarks</h1>
+    </header>
+
+    <div class="stats-section">
+      <h2>Quick Stats</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="totalBookmarks">-</div>
+          <div class="stat-label">Total Bookmarks</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="duplicateCount">-</div>
+          <div class="stat-label">Duplicates</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="oldBookmarksCount">-</div>
+          <div class="stat-label">Old/Unused</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="tagCount">-</div>
+          <div class="stat-label">Tags</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions-section">
+      <h2>Quick Actions</h2>
+      <button id="openManager" class="btn btn-primary">
+        <span class="btn-icon">📋</span>
+        Open Full Manager
+      </button>
+      <button id="findDuplicates" class="btn btn-secondary">
+        <span class="btn-icon">🔍</span>
+        Find Duplicates
+      </button>
+      <button id="findOldBookmarks" class="btn btn-secondary">
+        <span class="btn-icon">🕒</span>
+        Find Old Bookmarks
+      </button>
+      <button id="openSettings" class="btn btn-secondary">
+        <span class="btn-icon">⚙️</span>
+        Settings
+      </button>
+    </div>
+
+    <div class="loading" id="loading" style="display: none;">
+      <div class="spinner"></div>
+      <p>Loading...</p>
+    </div>
+  </div>
+
+  <script src="../utils/bookmark-utils.js"></script>
+  <script src="../utils/storage-utils.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

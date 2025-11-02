@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Bookmark Organizer - Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Barbo's Better Bookmark Organizer</h1>
+      <p>Configure your bookmark management preferences</p>
+    </header>
+
+    <main>
+      <section class="settings-section">
+        <h2>General Settings</h2>
+
+        <div class="setting-item">
+          <label for="oldThreshold">Old Bookmark Threshold (days)</label>
+          <p class="setting-description">Bookmarks not accessed for this many days will be considered old/unused</p>
+          <input type="number" id="oldThreshold" min="1" max="3650" value="365">
+        </div>
+
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" id="autoScan">
+            <span>Auto-scan on startup</span>
+          </label>
+          <p class="setting-description">Automatically clean up metadata and scan for issues when the browser starts</p>
+        </div>
+
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" id="confirmDelete">
+            <span>Confirm before deleting bookmarks</span>
+          </label>
+          <p class="setting-description">Show confirmation dialog before permanently deleting bookmarks</p>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2>Bookmark Review</h2>
+
+        <div class="setting-item">
+          <label for="reviewCount">Number of Bookmarks to Review</label>
+          <p class="setting-description">How many random bookmarks to show for review on the home page</p>
+          <input type="number" id="reviewCount" min="1" max="20" value="5">
+        </div>
+
+        <div class="setting-item">
+          <label for="reviewInterval">Review Interval (days)</label>
+          <p class="setting-description">How long to wait before a bookmark can be reviewed again</p>
+          <input type="number" id="reviewInterval" min="1" max="730" value="180">
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2>Archive Settings</h2>
+
+        <div class="setting-item">
+          <label for="archiveRetentionDays">Archive Retention Period (days)</label>
+          <p class="setting-description">How long to keep archived bookmarks before they are automatically deleted</p>
+          <input type="number" id="archiveRetentionDays" min="1" max="365" value="90">
+        </div>
+
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" id="autoDeleteArchived">
+            <span>Automatically delete expired archived bookmarks</span>
+          </label>
+          <p class="setting-description">Remove archived bookmarks automatically after the retention period expires</p>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2>Appearance</h2>
+
+        <div class="setting-item">
+          <label for="theme">Theme</label>
+          <p class="setting-description">Choose your preferred color scheme</p>
+          <select id="theme">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="auto">Auto (System)</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2>Data Management</h2>
+
+        <div class="setting-item">
+          <button id="cleanupBtn" class="btn btn-secondary">
+            Clean Up Metadata
+          </button>
+          <p class="setting-description">Remove metadata for deleted bookmarks</p>
+        </div>
+
+        <div class="setting-item">
+          <button id="exportBtn" class="btn btn-secondary">
+            Export All Data
+          </button>
+          <p class="setting-description">Download all bookmark metadata and settings</p>
+        </div>
+
+        <div class="setting-item">
+          <button id="importBtn" class="btn btn-secondary">
+            Import Data
+          </button>
+          <input type="file" id="importFile" accept=".json" style="display: none;">
+          <p class="setting-description">Import previously exported data</p>
+        </div>
+
+        <div class="setting-item">
+          <button id="resetBtn" class="btn btn-danger">
+            Reset All Data
+          </button>
+          <p class="setting-description">Clear all metadata and reset to default settings (bookmarks will not be deleted)</p>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2>About</h2>
+        <div class="about-info">
+          <p><strong>Barbo's Better Bookmark Organizer</strong> v1.0.0</p>
+          <p>Organize, tag, and maintain your Firefox bookmarks efficiently.</p>
+          <p style="margin-top: 12px;">Features:</p>
+          <ul>
+            <li>Review random bookmarks to keep your collection organized</li>
+            <li>Find and remove duplicate bookmarks</li>
+            <li>Identify old/unused bookmarks</li>
+            <li>Tag and categorize bookmarks</li>
+            <li>Track bookmark usage statistics</li>
+            <li>Export and import bookmark data</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <button id="saveBtn" class="btn btn-primary">Save Settings</button>
+      <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+      <div id="saveStatus" class="save-status"></div>
+    </footer>
+  </div>
+
+  <script src="../utils/bookmark-utils.js"></script>
+  <script src="../utils/storage-utils.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Bookmark Organizer - Manager</title>
+  <link rel="stylesheet" href="manager.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1>Barbo's Better Bookmarks</h1>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-view="review">
+          <span class="nav-icon">⭐</span>
+          Review Queue
+          <span class="nav-count" id="navCountReview">0</span>
+        </a>
+        <a href="#" class="nav-item" data-view="all">
+          <span class="nav-icon">📚</span>
+          All Bookmarks
+          <span class="nav-count" id="navCountAll">0</span>
+        </a>
+        <a href="#" class="nav-item" data-view="archive">
+          <span class="nav-icon">📦</span>
+          Archive
+          <span class="nav-count" id="navCountArchive">0</span>
+        </a>
+        <a href="#" class="nav-item" data-view="duplicates">
+          <span class="nav-icon">🔍</span>
+          Duplicates
+          <span class="nav-count" id="navCountDuplicates">0</span>
+        </a>
+        <a href="#" class="nav-item" data-view="similar">
+          <span class="nav-icon">🔗</span>
+          Similar
+          <span class="nav-count" id="navCountSimilar">0</span>
+        </a>
+        <a href="#" class="nav-item" data-view="old">
+          <span class="nav-icon">🕒</span>
+          Old/Unused
+          <span class="nav-count" id="navCountOld">0</span>
+        </a>
+        <a href="#" class="nav-item" data-view="tags">
+          <span class="nav-icon">🏷️</span>
+          Tags
+          <span class="nav-count" id="navCountTags">0</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button id="refreshBtn" class="btn btn-secondary btn-sm">
+          <span>🔄</span> Refresh
+        </button>
+        <button id="settingsBtn" class="btn btn-secondary btn-sm">
+          <span>⚙️</span> Settings
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="content-header">
+        <div class="header-left">
+          <h2 id="viewTitle">All Bookmarks</h2>
+          <p id="viewDescription">Manage and organize your bookmarks</p>
+        </div>
+        <div class="header-right">
+          <input type="text" id="searchInput" placeholder="Search bookmarks..." class="search-input">
+          <button id="exportBtn" class="btn btn-secondary">Export Data</button>
+        </div>
+      </header>
+
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <span id="selectionInfo">0 selected</span>
+          <button id="selectAllBtn" class="btn btn-sm">Select All</button>
+          <button id="deselectAllBtn" class="btn btn-sm">Deselect All</button>
+        </div>
+        <div class="toolbar-right">
+          <button id="deleteSelectedBtn" class="btn btn-danger btn-sm" disabled>Delete Selected</button>
+          <button id="tagSelectedBtn" class="btn btn-primary btn-sm" disabled>Add Tags</button>
+        </div>
+      </div>
+
+      <div id="contentArea" class="content-area">
+        <!-- Content will be dynamically loaded here -->
+      </div>
+
+      <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal for adding tags -->
+  <div id="tagModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Add Tags</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Enter tags separated by commas:</p>
+        <input type="text" id="tagInput" placeholder="tag1, tag2, tag3" class="input-field">
+        <div id="existingTags" class="tag-suggestions"></div>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelTagBtn" class="btn btn-secondary">Cancel</button>
+        <button id="saveTagBtn" class="btn btn-primary">Save Tags</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../utils/bookmark-utils.js"></script>
+  <script src="../utils/storage-utils.js"></script>
+  <script src="manager.js"></script>
+</body>
+</html>
