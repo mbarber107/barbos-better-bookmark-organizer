@@ -2,6 +2,7 @@
 *.xpi
 *.zip
 web-ext-artifacts/
+icons_backup/
 
 # macOS
 .DS_Store
